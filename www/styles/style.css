@@ -1,0 +1,21 @@
+* {
+    margin: 0
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 10px 10px;
+    text-decoration: none;
+    border: solid 1px black;
+    width: 23.39%;
+    background-color: coral;
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
+.navbar a:hover {
+    background: lightsalmon;
+    color: grey;
+}
