@@ -1,5 +1,6 @@
 * {
-    margin: 0
+    margin: 0;
+    padding: 0;
 }
 
 nav a {
@@ -7,12 +8,13 @@ nav a {
     display: block;
     color: black;
     text-align: center;
-    padding: 10px 10px;
+    padding: 10px 0px;
     text-decoration: none;
-    border: solid 1px black;
     width: 23.39%;
     background-color: coral;
-    font-family: Verdana, Geneva, Tahoma, sans-serif
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    width: 25%;
+    font-size: 1rem;
 }
 
 nav a:hover {
@@ -20,12 +22,25 @@ nav a:hover {
     color: grey;
 }
 
+nav {
+    width: 100%;
+}
+
 table {
     border-collapse: collapse;
 }
 
-th, td {
+td {
     border-bottom: 1px solid #ddd;
 }
 
 tr:hover {background-color: #f5f5f5;}
+
+.center {
+    margin:auto;
+    width: 50%;
+}
+
+.center tr{
+    text-align: center
+}
