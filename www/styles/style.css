@@ -1,7 +1,8 @@
                 * {
                     margin: 0;
                     padding: 0;
-                    font-family: Verdana, Geneva, Tahoma, sans-serif;
+                    font-family: 'Galada';
+                    font-size: 22px;
                 }
                 
                 body {
@@ -16,7 +17,7 @@
                     text-decoration: none;
                     text-align: center;
                     background-image: url("../images/nav-tile.JPG");
-                    font-family: Verdana, Geneva, Tahoma, sans-serif;
+                    font-family: 'Bowlby One SC';
                     width: 20%;
                     font-size: 1rem;
                     font-weight: bold;
@@ -103,7 +104,7 @@
                     }
                     .home::after {
                         content: "▶";
-                        font-size: 2rem;
+                        font-size: 1rem;
                     }
                 }
                 
@@ -141,7 +142,6 @@
                     border: 1px solid black;
                     padding: 7px;
                     margin: 0px;
-                    -webkit-transition: all 0.30s ease-in-out;
                     outline: none;
                 }
                 
@@ -180,6 +180,7 @@
                     border-collapse: collapse;
                     width: 80%;
                     text-align: center;
+                    background-color: white;
                 }
                 
                 .table-style td,
@@ -190,18 +191,18 @@
                 }
                 
                 .table-style tr:nth-child(even) {
-                    background-color: #f2f2f2;
+                    background-color: lightgray;
                 }
                 
                 .table-style tr:hover {
-                    background-color: #ddd;
+                    background-color: lightsalmon;
                 }
                 
                 .table-style th {
-                    padding-top: 12px;
-                    padding-bottom: 12px;
+                    padding-top: 7px;
+                    padding-bottom: 7px;
                     text-align: center;
-                    background-color: coral;
+                    background-image: url("../images/nav-tile.JPG");
                     color: white;
                 }
                 
@@ -209,7 +210,7 @@
                     position: absolute;
                     bottom: 0;
                     width: 100%;
-                    height: 60px;
-                    color: black;
+                    height: 3%;
+                    color: white;
                     text-align: center;
                 }
