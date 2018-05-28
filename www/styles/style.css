@@ -41,9 +41,16 @@ nav {
 article{
     top:70px;
     clear: both;
-    position: absolute;
+    position: static;
     z-index: -1;
     width: 100%;
+    text-align: center;
+}
+
+footer{
+    position: fixed;
+    bottom: 10px;
+    text-align: center;
 }
 
 .home {
