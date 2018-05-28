@@ -29,7 +29,8 @@
                 }
                 
                 nav a:hover {
-                    background: transparent url("../images/nav-tile.JPG") color: grey;
+                    background: transparent url("../images/nav-tile.JPG");
+                    color: grey;
                 }
                 
                 nav a:active {
