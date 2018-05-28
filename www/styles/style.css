@@ -14,6 +14,7 @@ nav a {
     background-color: coral;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     width: 20%;
+    min-width: 110px;
     font-size: 1rem;
     font-weight: bold;
 }
