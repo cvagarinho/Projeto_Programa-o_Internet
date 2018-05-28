@@ -18,15 +18,35 @@
         <a href="statistics.html">STATISTICS</a>
     </nav>
 
-    <article>
+    <h1>&nbsp;</h1>
+
+    <div style="margin:10px; text-align: center">
         <form action="players.html">
-            <label for="Name">Name</label>
-            <input type="text" name="name" placeholder="Name...">
-            <label for="Birth Date">Birth Date</label>
-            <input type="text" name="name" placeholder="Name...">
-            <input type="submit" value="Search">
+            <fieldset style="border: 2px black solid; margin-top: 10px">
+                <ul class="form-style-1">
+
+                    <legend>Add Player</legend>
+                    <li><label for="Name">Name<span class="required">*</span></label>
+                        <input type="text" name="name" placeholder="Name" id="name">
+                    </li>
+                    <br>
+                    <li>
+                        <label for="Birth Date">Birth Date<span class="required">*</span></label>
+                        <input type="text" name="birthDate" placeholder="Birth Date" id="birthDate">
+                    </li>
+                    <br>
+                    <li>
+                        <label for="Country">Country</label>
+                        <input type="text" name="country" placeholder="Country" id="country">
+                    </li>
+                    <br>
+                    <li>
+                        <input type="submit" value="Add" class="center">
+                    </li>
+                </ul>
+            </fieldset>
         </form>
-    </article>
+    </div>
 </body>
 
 </html>
