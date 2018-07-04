@@ -9,11 +9,39 @@
     <link rel="icon" href="./images/icon.png" />
     <link href='https://fonts.googleapis.com/css?family=Galada' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Bowlby One SC' rel='stylesheet'>
+    <script src="scripts/projeto.js"></script>
     <title>Pookie's Adventure</title>
 </head>
 
 <body>
 
+    <nav>
+
+
+        <a href="javascript: info.showHome();">POOKIE'S ADVENTURES</a>
+        <a href="javascript: info.showPlayers();">PLAYERS</a>
+        <a href="sessions.html">GAME SESSIONS</a>
+        <a href="statistics.html">STATISTICS</a>
+
+
+    </nav>
+    <br />
+    <h3 id="headerTitle">Home</h2>
+        <div id="divInformation"></div>
+        <form id="formPlayer" action="javascript: info.processingPlayer('create');">
+            <input id="id" type="hidden" />
+            <label for="name">Name:</label>&nbsp;
+            <input id="name" type="text" placeholder="Introduza o nome"><br/>
+            <label for="date">Birth Date:</label>&nbsp;
+            <input id="date" type="date" /><br/>
+            <label for="country">Country:</label>&nbsp;
+            <select id="countries"></select><br/>
+            <br/><br/>
+            <input id="Save" type="submit" value="Save" />
+            <input id="clean" type="reset" value="clean" />
+        </form>
+
+        <!--
     <nav>
         <a href="index.html" class="home">POOKIE'S ADVENTURES</a>
         <a href="players.html">PLAYERS</a>
@@ -27,10 +55,14 @@
 
         </div>
     </article>
+    -->
 
-    <footer>
-        <abbr title="Ricardo Rocha &amp; Claudio Vagarinho">Created by RC</abbr>
-    </footer>
+
+
+
+        <footer>
+            <abbr title="Ricardo Rocha &amp; Claudio Vagarinho">Created by RC</abbr>
+        </footer>
 
 
 
