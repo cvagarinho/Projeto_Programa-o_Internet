@@ -72,9 +72,9 @@ Information.prototype.showPlayers = function() {
     document.getElementById("formPlayer").style.display = "none";
     var table = document.createElement("table");
     table.id = "tablePlayer";
-    table.appendChild(tableHead(new Player()));
+    table.appendChild(tableHead(new Player(), true));
     for (var i = 0; i < this.players.length; i++) {
-        table.appendChild(tableLine(this.players[i]));
+        table.appendChild(tableLine(this.players[i], false));
     }
     var divTable = document.createElement("divTable");
     divTable.setAttribute("id", "divTable");
