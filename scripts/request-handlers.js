@@ -57,7 +57,7 @@ function createUpdatePlayer(req, res) {
         sql = mysql.format("UPDATE player SET name=?, birthdate=?, idCountry=? WHERE id=?", [name, birthDate, idCountry, req.params.id]);
     } else {
         if (req.method === "POST") {
-            sql = mysql.format("INSERT INTO player(name, birthdate, idCountry) VALUES (?,?,?,?)", [name, birthDate, idCountry]);
+            sql = mysql.format("INSERT INTO player(name, birthdate, idCountry) VALUES (?,?,?)", [name, birthDate, idCountry]);
         }
     }
     connection.query(sql, function(err, rows, fields) {
