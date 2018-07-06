@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("www"));
 
-app.get("/players", requestHandlers.getPlayers);
+app.get("/player", requestHandlers.getPlayers);
 app.get("/country", requestHandlers.getCountries);
 app.post("/player", requestHandlers.createUpdatePlayer);
 app.put("/player/:id", requestHandlers.createUpdatePlayer);

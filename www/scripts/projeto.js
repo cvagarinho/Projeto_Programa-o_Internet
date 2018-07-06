@@ -5,8 +5,9 @@
  * @memberof window
  * @params {Event} event - objeto que representará o evento
  */
-var info = new Information("divInformation");
+
 window.onload = function(event) {
+    var info = new Information("divInformation");
     info.getPlayer();
     info.getCountry();
     window.info = info;
@@ -68,6 +69,8 @@ Information.prototype.showHome = function() {
  * coloca a palavra "Players" no div titulo, cria dinamicamente uma tabela com a informação das pessoas e respetivos botões de crud
  */
 Information.prototype.showPlayers = function() {
+
+
     document.getElementById("headerTitle").textContent = "Players";
     document.getElementById("formPlayer").style.display = "none";
     var table = document.createElement("table");
@@ -123,6 +126,8 @@ Information.prototype.showPlayers = function() {
     createButton(divTable, deletePlayerEventHandler, "Delete Player");
     createButton(divTable, updatePlayerEventHandler, "Update Player");
     replaceChilds(this.id, divTable);
+
+
 };
 
 /**
@@ -207,8 +212,7 @@ Information.prototype.getPlayer = function() {
             var response = JSON.parse(xhr.responseText);
             info.players = [];
             response.player.forEach(function(current) {
-                info.players.push(new Player(current.id, current.name, (current.birthDate) ? current.birthDate.toString().split('T')[0] : "-",
-                    current.idCountry));
+                info.players.push(new Player(current.id, current.name, current.birthDate.split("T")[0], current.idCountry));
             });
         }
     };
