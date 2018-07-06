@@ -10,6 +10,7 @@ window.onload = function(event) {
     var info = new Information("divInformation");
     info.getPlayer();
     info.getCountry();
+    info.getSession();
     window.info = info;
 };
 
@@ -20,21 +21,23 @@ window.onload = function(event) {
  * 
  * @property {string} id - id do elemento HTML que contém a informação.
  * @property {country[]} countries - Array de objetos do tipo Country, para guardar todos os countries do nosso sistema
- * @property {player[]} players - Array de objetos do tipo player, para guardar todas as pessoas do nosso sistema
+ * @property {player[]} players - Array de objetos do tipo player, para guardar todos os jogadores do nosso sistema
+ * @property {gameSession[]} sessions - Array de objetos do tipo gameSession, para guardar todas as sessões de jogo do nosso sistema
  */
 function Information(id) {
     this.id = id;
     this.players = [];
     this.countries = [];
+    this.sessions = [];
 };
 
 /** 
- * @class Estrutura com capacidade de armazenar o estado de uma entidade pessoa 
+ * @class Estrutura com capacidade de armazenar o estado de uma entidade jogador 
  * @constructs Player
- * @param {int} id - id da pessoa
- * @param {int} name - nome da pessoa
- * @param {Date} birthDate - data de nascimento da pessoa
- * @param {int} idCountry - id do pais da pessoa
+ * @param {int} id - id do jogador
+ * @param {int} name - nome do jogador
+ * @param {Date} birthDate - data de nascimento do jogador
+ * @param {int} idCountry - id do pais do jogador
  */
 function Player(id, name, birthDate, idCountry) {
     this.id = id;
@@ -55,6 +58,20 @@ function Country(id, name, shortName) {
     this.name = name;
     this.shortName = shortName;
 };
+/** 
+ * @class Estrutura com capacidade de armazenar o estado de uma entidade sessão de jogo 
+ * @constructs GameSession
+ * @param {int} id - id da sessão
+ * @param {string} description - descrição
+ * @param {Date} date - data da sessão
+ * @param {int} idPlayer - id do jogador associado à sessão
+ */
+function GameSession(id, description, date, idPlayer) {
+    this.id = id;
+    this.description = description;
+    this.date = date;
+    this.idPlayer = idPlayer;
+};
 
 /**
  * coloca a palavra "home" no div titulo e limpa o div informação
@@ -63,16 +80,18 @@ Information.prototype.showHome = function() {
     document.getElementById("headerTitle").textContent = "Home";
     replaceChilds(this.id, document.createElement("div"));
     document.getElementById("formPlayer").style.display = "none";
+    document.getElementById("formSession").style.display = "none";
 };
 
 /**
- * coloca a palavra "Players" no div titulo, cria dinamicamente uma tabela com a informação das pessoas e respetivos botões de crud
+ * coloca a palavra "Players" no div titulo, cria dinamicamente uma tabela com a informação dos jogadores e respetivos botões de crud
  */
 Information.prototype.showPlayers = function() {
 
 
     document.getElementById("headerTitle").textContent = "Players";
     document.getElementById("formPlayer").style.display = "none";
+    document.getElementById("formSession").style.display = "none";
     var table = document.createElement("table");
     table.id = "tablePlayer";
     table.appendChild(tableHead(new Player(), true));
@@ -125,6 +144,74 @@ Information.prototype.showPlayers = function() {
     createButton(divTable, newPlayerEventHandler, "New Player");
     createButton(divTable, deletePlayerEventHandler, "Delete Player");
     createButton(divTable, updatePlayerEventHandler, "Update Player");
+    replaceChilds(this.id, divTable);
+
+
+};
+
+
+/**
+ * coloca a palavra "Game Sessions" no div titulo, cria dinamicamente uma tabela com a informação das sessões e respetivos botões de crud
+ */
+Information.prototype.showSessions = function() {
+
+
+    document.getElementById("headerTitle").textContent = "Game Sessions";
+    document.getElementById("formPlayer").style.display = "none";
+    document.getElementById("formSession").style.display = "none";
+    var table = document.createElement("table");
+    table.id = "tableSession";
+    table.appendChild(tableHead(new GameSession(), true));
+    for (var i = 0; i < this.sessions.length; i++) {
+        table.appendChild(tableLine(this.sessions[i], false));
+    }
+    var divTable = document.createElement("divTable");
+    divTable.setAttribute("id", "divTable");
+    divTable.appendChild(table);
+
+    function deleteSessionEventHandler() {
+        var table = document.getElementById("tableSession");
+        for (var i = 1, row; row = table.rows[i]; i++) {
+            var checkBox = row.cells[0].firstChild;
+            var idSession = row.cells[1].firstChild.nodeValue;
+            if (checkBox.checked) {
+                info.removeSession(idSession);
+            }
+        }
+    }
+
+    function newSessionEventHandler() {
+        replaceChilds("divTable", document.createElement("div"));
+        document.getElementById("formSession").action = "javascript: info.processingSession('create');";
+        document.getElementById("formSession").style.display = "block";
+        for (var i = 0; i < info.players.length; i++)
+            document.getElementById("players").options[i] = new Option(info.players[i].name, info.players[i].id);
+    }
+
+    function updateSessionEventHandler() {
+        var idSession = 0;
+        for (var i = 1; i < table.rows.length; i++) {
+            var checkBox = table.rows[i].cells[0].firstChild;
+            if (checkBox.checked)
+                idSession = parseInt(table.rows[i].cells[1].firstChild.nodeValue);
+        }
+        replaceChilds("divTable", document.createElement("div"));
+        document.getElementById("formSession").action = "javascript: info.processingSession('update');";
+        document.getElementById("formSession").style.display = "block";
+        document.getElementById("id").value = idSession;
+        document.getElementById("description").value = info.sessions[info.sessions.findIndex(i => i.id === idSession)].description;
+        document.getElementById("date").value = info.sessions[info.sessions.findIndex(i => i.id === idSession)].date.toString().split('T')[0];
+        //check this
+        var idPlayer = info.players[info.players.findIndex(i => i.id === idPlayer)].idPlayer;
+        for (var i = 0; i < info.players.length; i++) {
+            document.getElementById("players").options[i] = new Option(info.players[i].name, info.players[i].id);
+            if (info.players[i].id === idPlayer)
+                document.getElementById("players").selectedIndex = i;
+        }
+    }
+    createButton(divTable, newSessionEventHandler, "New Session");
+    createButton(divTable, deleteSessionEventHandler, "Delete Session");
+    createButton(divTable, updateSessionEventHandler, "Update Session");
     replaceChilds(this.id, divTable);
 
 
@@ -235,22 +322,55 @@ Information.prototype.getCountry = function() {
     };
     xhr.send();
 };
+
+/**
+ * Função que que tem como principal objetivo solicitar ao servidor NODE.JS o recurso player através do verbo GET, usando pedidos assincronos e JSON
+ */
+Information.prototype.getSession = function() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "http://localhost:8081/session", true);
+    xhr.onreadystatechange = function() {
+        if ((this.readyState === 4) && (this.status === 200)) {
+            var response = JSON.parse(xhr.responseText);
+            info.sessions = [];
+            response.gameSession.forEach(function(current) {
+                info.sessions.push(new GameSession(current.id, current.description, current.date.split("T")[0], current.idPlayer));
+            });
+        }
+    };
+    xhr.send();
+};
 /**
  * Função que apaga o recurso jogador com um pedido ao NODE.JS através do verbo DELETE, usando pedidos assincronos e JSON
  */
 Information.prototype.removePlayer = function(id) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("DELETE", "http://localhost:8081/player/" + id, true);
+    xhr.onreadystatechange = function() {
+        if ((this.readyState === 4) && (this.status === 200)) {
+            info.players.splice(info.players.findIndex(i => i.id === id), 1);
+            info.showPlayers();
+        }
+    };
+    xhr.send();
+}
+
+/**
+ * Função que apaga o recurso jogador com um pedido ao NODE.JS através do verbo DELETE, usando pedidos assincronos e JSON
+ */
+Information.prototype.removeSession = function(id) {
         var xhr = new XMLHttpRequest();
-        xhr.open("DELETE", "http://localhost:8081/player/" + id, true);
+        xhr.open("DELETE", "http://localhost:8081/session/" + id, true);
         xhr.onreadystatechange = function() {
             if ((this.readyState === 4) && (this.status === 200)) {
-                info.players.splice(info.players.findIndex(i => i.id === id), 1);
-                info.showPlayers();
+                info.sessions.splice(info.sessions.findIndex(i => i.id === id), 1);
+                info.showSessions();
             }
         };
         xhr.send();
     }
     /**
-     * Função que insere ou atualiza o recurso pessoa com um pedido ao servidor NODE.JS através do verbo POST ou PUT, usando pedidos assincronos e JSON
+     * Função que insere ou atualiza o recurso jogador com um pedido ao servidor NODE.JS através do verbo POST ou PUT, usando pedidos assincronos e JSON
      *  * @param {String} acao - controla qual a operação do CRUD queremos fazer
      */
 Information.prototype.processingPlayer = function(acao) {
@@ -283,4 +403,40 @@ Information.prototype.processingPlayer = function(acao) {
     }
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify(player));
+}
+
+/**
+ * Função que insere ou atualiza o recurso jogador com um pedido ao servidor NODE.JS através do verbo POST ou PUT, usando pedidos assincronos e JSON
+ *  * @param {String} acao - controla qual a operação do CRUD queremos fazer
+ */
+Information.prototype.processingSession = function(acao) {
+    var id = document.getElementById("id").value;
+    var description = document.getElementById("description").value;
+    var date = document.getElementById("date").value;
+    var playerList = document.getElementById("players");
+    var idPlayer = playerList.options[playerList.selectedIndex].value;
+    var session = { id: id, description: description, date: date, idPlayer: idPlayer };
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = "json";
+    if (acao === "create") {
+        xhr.onreadystatechange = function() {
+            if ((xhr.readyState == XMLHttpRequest.DONE) && (this.status === 200)) {
+                var newSession = new GameSession(xhr.response.insertId, description, date, idPlayer);
+                info.sessions.push(newSession);
+                info.showSessions();
+            }
+        }
+        xhr.open("POST", "http://localhost:8081/session", true);
+    } else if (acao === "update") {
+        xhr.onreadystatechange = function() {
+            if ((xhr.readyState == XMLHttpRequest.DONE) && (this.status === 200)) {
+                info.sessions.splice(info.sessions.findIndex(i => i.id === id), 1);
+                info.sessions.push(session);
+                info.showSessions();
+            }
+        }
+        xhr.open("PUT", "http://localhost:8081/session/" + id, true);
+    }
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(session));
 }

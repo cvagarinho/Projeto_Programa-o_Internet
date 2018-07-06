@@ -20,7 +20,7 @@
 
         <a href="javascript: info.showHome();">POOKIE'S ADVENTURES</a>
         <a href="javascript: info.showPlayers();">PLAYERS</a>
-        <a href="sessions.html">GAME SESSIONS</a>
+        <a href="javascript: info.showSessions();">GAME SESSIONS</a>
         <a href="statistics.html">STATISTICS</a>
 
 
@@ -36,6 +36,19 @@
         <input id="date" type="date" /><br/>
         <label for="country">Country:</label>&nbsp;
         <select id="countries"></select><br/>
+        <br/><br/>
+        <input id="Save" type="submit" value="Save" />
+        <input id="clean" type="reset" value="clean" />
+    </form>
+
+    <form id="formSession" action="javascript: info.processingSession('create');">
+        <input id="id" type="hidden" />
+        <label for="description">Description:</label>&nbsp;
+        <input id="description" type="text" placeholder="Introduza a descrição"><br/>
+        <label for="date">Date:</label>&nbsp;
+        <input id="date" type="date" /><br/>
+        <label for="player">Player:</label>&nbsp;
+        <select id="players"></select><br/>
         <br/><br/>
         <input id="Save" type="submit" value="Save" />
         <input id="clean" type="reset" value="clean" />

@@ -93,3 +93,79 @@ function removePlayer(req, res) {
     connection.end();
 }
 module.exports.removePlayer = removePlayer;
+
+
+//------------------------------------------------------
+
+/**
+ * Função para retornar a lista de pessoas da BD.
+ * @param {*} req 
+ * @param {*} res 
+ */
+function getSessions(req, res) {
+    var connection = mysql.createConnection(options);
+    connection.connect();
+    var query = "SELECT id, description, date, idPlayer FROM gameSession";
+    connection.query(query, function(err, rows) {
+        if (err) {
+            res.json({ "Erro": true, "Message": "Error MySQL query to gameSession table" });
+        } else {
+            res.json({ "Ok": false, "Message": "Success", "gameSession": rows });
+        }
+    });
+}
+module.exports.getSessions = getSessions;
+
+/**
+ * Função que permite criar ou editar uma pessoa, consoante o pedido enviado pelo cliente.
+ * 
+ * @param {Object} request pedido do cliente
+ * @param {Object} response resposta do servidor
+ */
+function createUpdateSession(req, res) {
+    var connection = mysql.createConnection(options);
+    connection.connect();
+    var description = req.body.description;
+    var date = (req.body.date) ? req.body.date : null;
+    var idPlayer = (req.body.idPlayer) ? req.body.idPlayer : null;
+    var sql;
+    if (req.method === "PUT") {
+        sql = mysql.format("UPDATE gameSession SET description=?, date=?, idPlayer=? WHERE id=?", [description, date, idPlayer, req.params.id]);
+    } else {
+        if (req.method === "POST") {
+            sql = mysql.format("INSERT INTO gameSession(description, date, idPlayer) VALUES (?,?,?)", [description, date, idPlayer]);
+        }
+    }
+    connection.query(sql, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+            res.sendStatus(404);
+        } else {
+            res.send(rows);
+        }
+    });
+    connection.end();
+}
+module.exports.createUpdateSession = createUpdateSession;
+
+/**
+ * Função que permite remover uma pessoa
+ * 
+ * @param {Object} request pedido do cliente
+ * @param {Object} response resposta do servidor
+ */
+function removeSession(req, res) {
+    var connection = mysql.createConnection(options);
+    connection.connect();
+    var sql = mysql.format("DELETE FROM gameSession WHERE id = ?", [req.params.id]);
+    connection.query(sql,
+        function(err, rows, fields) {
+            if (err) {
+                res.sendStatus(404);
+            } else {
+                res.send();
+            }
+        });
+    connection.end();
+}
+module.exports.removeSession = removeSession;
